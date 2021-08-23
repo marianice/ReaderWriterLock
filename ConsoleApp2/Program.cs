@@ -50,7 +50,7 @@ namespace ConsoleApp2
             for (int i = 0; i < numThreads; i++)
                 t[i].Join();
 
-            Console.WriteLine("\n{0} reads, {1} writes, {2} reader time-outs, {3} writer time-outs.",
+            Console.WriteLine("\n{0} чтений, {1} записей, {2} тайм-аутов чтения, {3} тайм-аутов записи.",
                   reads, writes, readerTimeouts, writerTimeouts);
             Console.Write("Press ENTER to exit... ");
             Console.ReadLine();
@@ -81,7 +81,7 @@ namespace ConsoleApp2
                 try
                 {
                     // безопасное чтение с общего ресурса
-                    Display("reads resource value " + resource);
+                    Display("читает значение ресурса " + resource);
                     Interlocked.Increment(ref reads);
                 }
                 finally
@@ -107,7 +107,7 @@ namespace ConsoleApp2
                 {
                     // безопасное чтение с общего ресурса
                     resource = rnd.Next(500);
-                    Display("writes resource value " + resource);
+                    Display("записывает значение ресурса " + resource);
                     Interlocked.Increment(ref writes);
                 }
                 finally
@@ -132,7 +132,7 @@ namespace ConsoleApp2
                 try
                 {
                     // безопасное чтение с общего ресурса
-                    Display("reads resource value " + resource);
+                    Display("читает значение ресурса " + resource);
                     Interlocked.Increment(ref reads);
 
                     // Чтобы записать нужно снять блокировку на чтене и запросить блокировку записи или обновить блокировку чтения.
@@ -144,7 +144,7 @@ namespace ConsoleApp2
                         {
                             // безопасное чтение и запись в общий ресурс
                             resource = rnd.Next(500);
-                            Display("writes resource value " + resource);
+                            Display("записывает значение ресурса " + resource);
                             Interlocked.Increment(ref writes);
                         }
                         finally
@@ -160,7 +160,7 @@ namespace ConsoleApp2
                     }
 
                     // безопасное чтение при блокировке
-                    Display("reads resource value " + resource);
+                    Display("читает значение ресурса " + resource);
                     Interlocked.Increment(ref reads);
                 }
                 finally
@@ -188,7 +188,7 @@ namespace ConsoleApp2
                 {                
                     // безопасное чтение для этого потока из общего ресурса, читаем и присваиваем
                     int resourceValue = resource;     
-                    Display("reads resource value " + resourceValue);
+                    Display("читает значение ресурса " + resourceValue);
                     Interlocked.Increment(ref reads);
                     lastWriter = rwl.WriterSeqNum;
                     LockCookie lc = rwl.ReleaseLock();
@@ -201,11 +201,11 @@ namespace ConsoleApp2
                     {
                         resourceValue = resource;
                         Interlocked.Increment(ref reads);
-                        Display("resource has changed " + resourceValue);
+                        Display("ресурс изменился " + resourceValue);
                     }
                     else
                     {
-                        Display("resource has not changed " + resourceValue);
+                        Display("ресурс не изменился " + resourceValue);
                     }
                 }
                 finally
@@ -224,7 +224,7 @@ namespace ConsoleApp2
         // вывод на экран
         static void Display(string msg)
         {
-            Console.Write("Thread {0} {1}.       \r", Thread.CurrentThread.Name, msg);
+            Console.Write("Поток {0} {1}.       \r", Thread.CurrentThread.Name, msg);
         }
     }
 }
